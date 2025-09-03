@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/header') %>
+<body>
+    <%- include('partials/nav') %>
+    <h1><%= title %></h1>
+    <form class="blog-form" action="/blogs/create" method="POST">
+        <div class="form-group">
+            <label class="form-label" for="title">Title</label>
+            <input class="form-input" type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="content">Content</label>
+            <textarea class="form-textarea" id="content" name="content" rows="8" required></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="author">Author</label>
+            <input class="form-input" type="text" id="author" name="author" required>
+        </div>
+        <button class="form-button" type="submit">Create Blog</button>
+    </form>
+</body>
+</html>

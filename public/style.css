@@ -1,0 +1,74 @@
+.navbar{
+    background-color: #333;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: flex-end;
+
+    a {
+        color: white;
+        text-decoration: none;
+        margin-right: 20px;
+    }
+}
+
+
+.blog-form {
+	max-width: 500px;
+	margin: 40px auto;
+	padding: 32px 24px;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+	font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: 600;
+	color: #333;
+}
+
+.form-input,
+.form-textarea {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 1rem;
+	background: #fafbfc;
+	transition: border-color 0.2s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+	border-color: #0078d4;
+	outline: none;
+	background: #fff;
+}
+
+.form-textarea {
+	resize: vertical;
+	min-height: 120px;
+}
+
+.form-button {
+	display: inline-block;
+	padding: 10px 28px;
+	background: #0078d4;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.form-button:hover {
+	background: #005fa3;
+}
