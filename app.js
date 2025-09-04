@@ -1,7 +1,18 @@
 const express = require('express')
+const { default: mongoose, get } = require('mongoose')
 const app = express()
 const port = 3000
+const Blog = require ('./models/blogModel.js')
 
+// const mongoose = require('mongoose')
+
+const dbURI = 'mongodb+srv://blog-user:a6HiqQqXvqVmhGJ6@blog0.ho1tvum.mongodb.net/'
+
+mongoose.connect(dbURI)
+  .then((result) => console.log('connected to db'))
+  .catch((err) => console.log(err))
+
+//listen for requests       
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
@@ -18,14 +29,61 @@ app.set('view engine', 'ejs')
 app.set('views', './views')
 
 
+// sandbox routesz
+// create a new blog
+// app.get('/add-blog', (req, res) => {
+//     const blog = new Blog({
+//         title: 'my 2nd blog',
+//         snippet: 'About my 2nd new blog',
+//         body: 'More about my new blog'
+//     })
+
+//     blog.save()
+//         .then((result) => {
+//             res.send(result)
+//         })
+//         .catch((err) => {
+//             console.log(err)
+//         })
+// })
+
+// // get all blogs
+// app.get('/all-blogs', (req, res) => {
+//     Blog.find()
+//         .then((result) => {
+//             res.send(result)
+//         })
+//         .catch((err) => {
+//             console.log(err)
+//         })
+// })
+
+// // get a single blog
+// app.get('/single-blog', (req, res) => {
+//     Blog.findById('68b9f3a916c2daf25f4d3f67')
+//         .then((result) => {
+//             res.send(result)
+//         })
+//         .catch((err) => {
+//             console.log(err)
+//         })
+// })
+
+
+
+
 app.get('/', (req, res) => {
-    const blogs = [
-        { title: 'My first day in school', snippet: 'Lorem ipsum dolor sit amet consectetur' },
-        { title: 'I am King', snippet: 'Lorem ipsum dolor sit amet consectetur' },
-        { title: 'I am the Creator', snippet: 'Lorem ipsum dolor sit amet consectetur' }
-    ]
-    //   res.send('Hello World!')
-    res.render('index', { header: 'Home', title: 'My BLOG', blogs })
+    res.redirect('/blogs')
+})
+
+app.get('/blogs', (req, res) => {
+    Blog.find().sort({ createdAt: -1 })
+        .then((result) => {
+            res.render('index', { blogs: result, header: 'All Blogs', title: 'All Blogs' })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
 
 app.get('/about', (req, res) => {
