@@ -19,6 +19,8 @@ app.listen(port, () => {
 
 //static middleware
 app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }));
+
 
 //morgan middleware for logging
 var morgan = require('morgan')
@@ -29,53 +31,24 @@ app.set('view engine', 'ejs')
 app.set('views', './views')
 
 
-// sandbox routesz
-// create a new blog
-// app.get('/add-blog', (req, res) => {
-//     const blog = new Blog({
-//         title: 'my 2nd blog',
-//         snippet: 'About my 2nd new blog',
-//         body: 'More about my new blog'
-//     })
-
-//     blog.save()
-//         .then((result) => {
-//             res.send(result)
-//         })
-//         .catch((err) => {
-//             console.log(err)
-//         })
-// })
-
-// // get all blogs
-// app.get('/all-blogs', (req, res) => {
-//     Blog.find()
-//         .then((result) => {
-//             res.send(result)
-//         })
-//         .catch((err) => {
-//             console.log(err)
-//         })
-// })
-
-// // get a single blog
-// app.get('/single-blog', (req, res) => {
-//     Blog.findById('68b9f3a916c2daf25f4d3f67')
-//         .then((result) => {
-//             res.send(result)
-//         })
-//         .catch((err) => {
-//             console.log(err)
-//         })
-// })
 
 
-
-
+// routes
 app.get('/', (req, res) => {
-    res.redirect('/blogs')
-})
+  res.redirect('/blogs');
+});
 
+app.get('/about', (req, res) => {
+  res.render('about', { title: 'About', text: 'About Us' });
+});
+
+// blog routes
+app.get('/create', (req, res) => {
+  res.render('create', { title: 'Create a new blog' });
+});
+
+
+// fetch all blogs from the database and render the index view
 app.get('/blogs', (req, res) => {
     Blog.find().sort({ createdAt: -1 })
         .then((result) => {
@@ -86,18 +59,42 @@ app.get('/blogs', (req, res) => {
         })
 })
 
-app.get('/about', (req, res) => {
-    //   res.send('Hello World!')
-    res.render('about', { header: 'About Me', title: 'About Me', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' })
+// create a new blog post
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body);
+    blog.save()
+        .then((result) => {
+            res.redirect('/blogs');
+        })
+        .catch((err) => {
+            console.log(err);
+        }); 
 })
 
-app.get('/createBlog', (req, res) => {
-    //   res.send('Hello World!')
-    res.render('createBlog', { header: 'Create Blog', title: 'Create Blog' })
-})
+// fetch a single blog by id and render the blog details view
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    Blog.findById(id)
+    .then((result) => {
+        res.render('details', { blog: result, header: 'Blog Details', title: 'Blog Details' })
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+});
 
 
-// 404 page, This is a middleware
-app.use((req, res) => {
-    res.status(404).render('404', { header: '404' , title: '404' , text: 'Page Not Found' })
-})
+// delete a blog post by id
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    Blog.findByIdAndDelete(id)
+    .then((result) => {
+        res.json({ redirect: '/blogs' });
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+});
+
+
+

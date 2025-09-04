@@ -5,12 +5,15 @@
     
     <%- include('partials/nav') %>
 
-    <h1><%= title %></h1>
+    <h1 class="home-title"><%= title %></h1>
 
     <% if (blogs.length > 0) { %>
         <% blogs.forEach(blog => { %>
-            <h3><%= blog.title %></h3>
-            <p><%= blog.snippet%></p>
+            <a href="/blogs/<%= blog._id %>" class="single">
+                <h3><%= blog.title %></h3>
+                <p><%= blog.snippet%></p>
+                <!-- <small><%= blog.body%></small> -->
+            </a>
             <% }) %>
     <% } else { %>
         <h2>No Blog Found</h2>

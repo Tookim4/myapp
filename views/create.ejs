@@ -3,19 +3,19 @@
 <%- include('partials/header') %>
 <body>
     <%- include('partials/nav') %>
-    <h1><%= title %></h1>
-    <form class="blog-form" action="/blogs/create" method="POST">
+    <h1 class="create-header"><%= title %></h1>
+    <form class="blog-form" action="/blogs" method="POST">
         <div class="form-group">
             <label class="form-label" for="title">Title</label>
             <input class="form-input" type="text" id="title" name="title" required>
         </div>
         <div class="form-group">
-            <label class="form-label" for="content">Content</label>
-            <textarea class="form-textarea" id="content" name="content" rows="8" required></textarea>
+            <label class="form-label" for="content">Snippet</label>
+            <input class="form-input" type="text" id="snippet" name="snippet" required>
         </div>
         <div class="form-group">
-            <label class="form-label" for="author">Author</label>
-            <input class="form-input" type="text" id="author" name="author" required>
+            <label class="form-label" for="body">Body</label>
+            <textarea class="form-textarea" id="body" name="body" rows="8" required></textarea>
         </div>
         <button class="form-button" type="submit">Create Blog</button>
     </form>
