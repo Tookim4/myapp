@@ -10,6 +10,10 @@ const methodOverride = require('method-override');
 
 const port = process.env.PORT || 5000
 
+app.listen(port, () => {
+  console.log(`App is listening on port ${port}`);
+});
+
 //connect to mongodb
 const dbURI = process.env.MONGO_URI
 
