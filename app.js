@@ -1,6 +1,7 @@
 const express = require('express')
 require('dotenv').config()
 const { default: mongoose, get } = require('mongoose')
+const path = require('path')
 const app = express()
 const Blog = require ('./models/blogModel.js')
 const blogRoutes = require('./routes/blogRoutes')
@@ -16,10 +17,6 @@ mongoose.connect(dbURI)
   .then((result) => console.log('connected to db'))
   .catch((err) => console.log(err))
 
-//listen for requests       
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
 
 //static middleware
 app.use(express.static('public'))
@@ -35,7 +32,7 @@ app.use(methodOverride('_method'));
 
 //setting up the view engine
 app.set('view engine', 'ejs')
-app.set('views', './views')
+app.set('views', path.join(__dirname, 'views'));
 
 // routes
 app.get('/create', (req, res) => {
@@ -52,4 +49,6 @@ app.get('/about', (req, res) => {
 
 // Use blog routes
 app.use('/blogs', blogRoutes)
+
+module.exports = app;
 
