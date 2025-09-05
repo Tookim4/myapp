@@ -83,24 +83,58 @@ body{
 		font-size: 1.1rem;
 	}
 
-	.delete {
+	.update {
 		align-self: center;
 		display: inline-block;
 		/* margin-top: 20px; */
 		padding: 10px 20px;
-		background: #d9534f;
+		/* background: #d9534f; */
 		color: #fff;
 		border: none;
 		border-radius: 6px;
-		font-size: 1rem;
+		/* font-size: 1rem; */
 		font-weight: 600;
 		cursor: pointer;
 		text-decoration: none;
 		transition: background 0.2s;
 
-		&:hover {
-			background: #c9302c;
+		img {
+			color: #000;
+			width: 20px;
+			height: 20px;
+
 		}
+
+		&:hover {
+			color: blue;
+			}
+	}
+
+	.delete {
+		align-self: center;
+		display: inline-block;
+		/* margin-top: 20px; */
+		padding: 10px 20px;
+		/* background: #d9534f; */
+		color: #fff;
+		border: none;
+		border-radius: 6px;
+		/* font-size: 1rem; */
+		font-weight: 600;
+		cursor: pointer;
+		text-decoration: none;
+		transition: background 0.2s;
+
+		img {
+			color: #000;
+			width: 20px;
+			height: 20px;
+
+		}
+
+		&:hover {
+			color: red;
+			}
 	}
 }
 
@@ -190,4 +224,16 @@ body{
 	font-size: 1.1rem;
 	line-height: 1.6;
 	color: #444;
+}
+
+/* footer styling  */
+footer {
+	text-align: center;
+	padding: 20px;
+	background-color: #333;
+	color: white;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	font-size: 0.9rem;
 }

@@ -4,20 +4,26 @@
 <body>
     <%- include('partials/nav') %>
     <h1 class="create-header"><%= title %></h1>
-    <form class="blog-form" action="/blogs" method="POST">
+    <form action="<%= editMode ? '/blogs/' + blog._id + '?_method=PUT' : '/blogs' %>" method="POST" class="blog-form">
         <div class="form-group">
             <label class="form-label" for="title">Title</label>
-            <input class="form-input" type="text" id="title" name="title" required>
+            <input 
+            class="form-input" 
+            type="text" 
+            id="title" 
+            name="title" 
+            value="<%= blog ? blog.title : '' %>"
+            required>
         </div>
         <div class="form-group">
             <label class="form-label" for="content">Snippet</label>
-            <input class="form-input" type="text" id="snippet" name="snippet" required>
+            <input class="form-input" type="text" id="snippet" name="snippet" value="<%= blog ? blog.snippet : '' %>" required>
         </div>
         <div class="form-group">
             <label class="form-label" for="body">Body</label>
-            <textarea class="form-textarea" id="body" name="body" rows="8" required></textarea>
+            <textarea class="form-textarea" id="body" name="body" rows="8" placeholder="Enter blog content" required><%= blog ? blog.body : '' %></textarea>
         </div>
-        <button class="form-button" type="submit">Create Blog</button>
+        <button class="form-button" type="submit"><%= editMode ? 'Update Blog' : 'Create Blog' %></button>
     </form>
 </body>
 </html>

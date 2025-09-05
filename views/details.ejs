@@ -7,26 +7,31 @@
   <div class="details-content">
     <div class="content">
       <h2><%= blog.title %></h2>
-      <a class="delete" data-doc="<%= blog._id %>">delete</a>
+      <section class="btns">
+        <a class="update" href="/blogs/<%= blog._id %>/edit">
+          <img src="/edit.svg" alt="edit icon">
+        </a>
+        <a class="delete" data-doc="<%= blog._id %>">
+          <img src="/trash.svg" alt="delete icon" >
+        </a>
+      </section>
     </div>
     <p><%= blog.body %></p>
   </div>
 
 
   <script>
-    const deleteBtn = document.querySelector('.delete');
-    deleteBtn.addEventListener('click', (e) => {
-      const id = e.target.getAttribute('data-doc');
-      fetch('/blogs/' + id, {
-        method: 'DELETE'
-      }).then((res) => {
-        return res.json();
-      }).then((data) => {
-        console.log(data);
-        window.location.href = '/blogs';
-      }).catch((err) => {
-        console.log(err);
-      });
+   const trashcan = document.querySelector('a.delete');
+
+    trashcan.addEventListener('click', (e) => {
+      const endpoint = `/blogs/${trashcan.dataset.doc}`;
+
+      fetch(endpoint, {
+        method: 'DELETE',
+      })
+      .then(response => response.json())
+      .then(data => window.location.href = data.redirect)
+      .catch(err => console.log(err));
     });
   </script>
 </body>
