@@ -39,7 +39,7 @@ app.set('views', './views')
 
 // routes
 app.get('/create', (req, res) => {
-  res.render('create', { title: 'Create a new blog' });
+  res.render('create', { title: 'Create a new blog', blog: null, editMode: false });
 });
 
 app.get('/', (req, res) => {
