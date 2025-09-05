@@ -1,14 +1,16 @@
 const express = require('express')
+require('dotenv').config()
 const { default: mongoose, get } = require('mongoose')
 const app = express()
-const port = 3000
 const Blog = require ('./models/blogModel.js')
 const blogRoutes = require('./routes/blogRoutes')
 const methodOverride = require('method-override');
 
-// const mongoose = require('mongoose')
 
-const dbURI = 'mongodb+srv://blog-user:a6HiqQqXvqVmhGJ6@blog0.ho1tvum.mongodb.net/'
+const port = process.env.PORT || 5000
+
+//connect to mongodb
+const dbURI = process.env.MONGO_URI
 
 mongoose.connect(dbURI)
   .then((result) => console.log('connected to db'))
