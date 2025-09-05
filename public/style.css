@@ -315,7 +315,7 @@ footer {
 	padding: 10px;
 	background-color: #689B8A;
 	color: #F9CB99;
-	position: fixed;
+	/* position: fixed; */
 	bottom: 0;
 	width: 100%;
 	/* font-size: 0.9rem; */

@@ -39,13 +39,14 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'));
 
 app.locals.formatDate = (date) => {
-  return new Date(date).toLocaleDateString('en-US', {
+  return new Date(date).toLocaleDateString('en-KE', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
-    hour12: true
+    hour12: true,
+    timeZone: 'Africa/Nairobi'
   });
 };
 
