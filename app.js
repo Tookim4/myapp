@@ -50,5 +50,3 @@ app.get('/about', (req, res) => {
 // Use blog routes
 app.use('/blogs', blogRoutes)
 
-module.exports = app;
-
