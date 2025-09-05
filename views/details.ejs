@@ -6,7 +6,10 @@
 
   <div class="details-content">
     <div class="content">
-      <h2><%= blog.title %></h2>
+      <section class="title-date">
+        <h2><%= blog.title %></h2>
+        <small> - <%= formatDate(blog.createdAt) %></small>
+      </section>
       <section class="btns">
         <a class="update" href="/blogs/<%= blog._id %>/edit">
           <img src="/edit.svg" alt="edit icon">

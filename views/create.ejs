@@ -3,7 +3,7 @@
 <%- include('partials/header') %>
 <body>
     <%- include('partials/nav') %>
-    <h1 class="create-header"><%= title %></h1>
+    <!-- <h1 class="create-header"><%= title %></h1> -->
     <form action="<%= editMode ? '/blogs/' + blog._id + '?_method=PUT' : '/blogs' %>" method="POST" class="blog-form">
         <div class="form-group">
             <label class="form-label" for="title">Title</label>

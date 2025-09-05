@@ -3,9 +3,12 @@
 <%- include('header') %>
 <body>
     <nav class="navbar">
-        <a href="/">Home</a> 
-        <a href="/about">About</a> 
-        <a href="/create">Create Blog</a>
+        <h1 class="home-title"><%= title %></h1>
+        <section class="nav-links">
+            <a href="/">Home</a> 
+            <a href="/about">About</a> 
+            <a href="/create" class="create_blog">Create</a>
+        </section>
     </nav>
 </body>
 </html>
