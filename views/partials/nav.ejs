@@ -3,12 +3,44 @@
 <%- include('header') %>
 <body>
     <nav class="navbar">
-        <h1 class="home-title"><%= title %></h1>
+        <a href="/" class="home-title"><%= title %></a>
         <section class="nav-links">
-            <a href="/">Home</a> 
+            <!-- <a href="/">Home</a>  -->
             <a href="/about">About</a> 
-            <a href="/create" class="create_blog">Create</a>
+
+            <% if (!user) { %>
+                <a href="/signup">Sign Up</a>
+                <a href="/login">Login</a>
+            <% } else { %>
+                <a href="/create" class="create_blog">Create</a>
+                <!-- User dropdown -->
+                <div class="user-dropdown">
+                    <button class="dropdown-toggle">
+                        <img src="/user.svg" alt="user icon">
+                    </button>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-username"><%= user.username %></div>
+                        <a href="/blogs/my-blogs">My Blogs</a>
+                        <a href="/logout" class="dropdown-logout">Logout</a>
+                    </div>
+                </div>
+            <% } %>
         </section>
     </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdown = document.querySelector('.user-dropdown');
+            if (dropdown) {
+                const toggle = dropdown.querySelector('.dropdown-toggle');
+                toggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('open');
+                });
+                document.addEventListener('click', function() {
+                    dropdown.classList.remove('open');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

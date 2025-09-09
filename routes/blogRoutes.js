@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const blogControllers = require('../controllers/blogControllers');
+const { requireAuth } = require('../middleware/authMiddleware');
 
 
 // fetch all blogs from the database and render the index view
 router.get('/', blogControllers.fetch_blogs);
+
+// User’s Blogs
+router.get('/my-blogs', requireAuth, blogControllers.fetch_user_blogs);
 
 // create a new blog post
 router.post('/', blogControllers.create_blog);

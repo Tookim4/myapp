@@ -10,7 +10,7 @@
             <a href="/blogs/<%= blog._id %>" class="single">
                 <h3><%= blog.title %></h3>
                 <p><%= blog.snippet%></p>
-                <small> <%= formatDate(blog.createdAt) %></small>
+                <small>By <%= blog.user ? blog.user.username : 'Unknown' %> | <%= formatDate(blog.createdAt) %></small>
             </a>
             <% }) %>
     <% } else { %>

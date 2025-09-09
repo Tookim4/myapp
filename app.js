@@ -1,43 +1,54 @@
-const express = require('express')
-require('dotenv').config()
-const { default: mongoose, get } = require('mongoose')
-const path = require('path')
-const app = express()
-const Blog = require ('./models/blogModel.js')
-const blogRoutes = require('./routes/blogRoutes')
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
 const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
 
+const blogRoutes = require('./routes/blogRoutes');
+const authRoutes = require('./routes/authRoutes');
+const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 
-const port = process.env.PORT || 5000
+// Load environment variables
+dotenv.config();
 
-app.listen(port, () => {
-  console.log(`App is listening on port ${port}`);
-});
+// Initialize app
+const app = express();
+const port = process.env.PORT || 5000;
 
-//connect to mongodb
-const dbURI = process.env.MONGO_URI
-
+// Database connection
+const dbURI = process.env.MONGO_URI;
 mongoose.connect(dbURI)
-  .then((result) => console.log('connected to db'))
-  .catch((err) => console.log(err))
+  .then(() => {
+    console.log('✅ Connected to MongoDB');
+    app.listen(port, () => console.log(`🚀 App running on http://localhost:${port}`));
+  })
+  .catch((err) => console.error('❌ DB connection error:', err));
 
+// --------- MIDDLEWARE --------- //
 
-//static middleware
-app.use(express.static('public'))
+// Static files
+app.use(express.static('public'));
+
+// Body parsers
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Cookies
+app.use(cookieParser());
 
-//morgan middleware for logging
-var morgan = require('morgan')
-app.use(morgan('tiny'))
+// Logging
+app.use(morgan('tiny'));
 
-// method-override middleware
+// Method override for PUT/DELETE in forms
 app.use(methodOverride('_method'));
 
-//setting up the view engine
-app.set('view engine', 'ejs')
+// EJS view engine
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Global helper for formatting dates in views
 app.locals.formatDate = (date) => {
   return new Date(date).toLocaleDateString('en-KE', {
     day: 'numeric',
@@ -50,20 +61,27 @@ app.locals.formatDate = (date) => {
   });
 };
 
+// --------- ROUTES --------- //
 
-// routes
-app.get('/create', (req, res) => {
+// Attach user info to res.locals
+app.use(checkUser);
+
+// Home redirect
+app.get('/', (req, res) => res.redirect('/blogs'));
+
+// Blog creation page (protected)
+app.get('/create', requireAuth, (req, res) => {
   res.render('create', { title: 'Write Blog', blog: null, editMode: false });
 });
 
-app.get('/', (req, res) => {
-  res.redirect('/blogs');
-});
-
+// About page
 app.get('/about', (req, res) => {
-  res.render('about', { title: 'About', text: 'This simple blog page was created as part of my journey to learn Node.js and understand how full-stack web applications work. It allows users to create, display, edit, and delete blog posts using a clean and minimal interface. The project focuses on implementing core CRUD functionality while working with Express.js, EJS templates, and MongoDB. It serves as a foundation for learning and experimenting with web development concepts, with plans to add more features in the future such as user authentication and comments.' });
+  res.render('about', {
+    title: 'About',
+    text: 'This simple blog page was created as part of my journey to learn Node.js and understand how full-stack web applications work. It allows users to create, display, edit, and delete blog posts using a clean and minimal interface. The project focuses on implementing core CRUD functionality while working with Express.js, EJS templates, and MongoDB. It serves as a foundation for learning and experimenting with web development concepts, with plans to add more features in the future such as user authentication and comments.'
+  });
 });
 
-// Use blog routes
-app.use('/blogs', blogRoutes)
-
+// Blog & Auth routes
+app.use('/blogs', blogRoutes);
+app.use(authRoutes);

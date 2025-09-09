@@ -1,0 +1,19 @@
+<%- include('partials/nav') %>
+
+<main class="user-blogs-container">
+  <!-- <h2><%= user.username %>'s Blogs</h2> -->
+
+  <% if (blogs.length === 0) { %>
+    <p style="text-align: center;">You have not created any blogs yet. <a style="text-decoration: none; color: #689B8A;"  href="/create">Create one now !!</a></p>
+  <% } else { %>
+    <% blogs.forEach(blog => { %>
+      <a href="/blogs/<%= blog._id %>" class="single">
+        <h3><%= blog.title %></h3>
+        <p><%= blog.body.substring(0, 150) %>...</p>
+        <small><%= blog.createdAt.toDateString() %></small>
+      </a>
+    <% }) %>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>

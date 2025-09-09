@@ -11,13 +11,16 @@
         <small> - <%= formatDate(blog.createdAt) %></small>
       </section>
       <section class="btns">
+      <% if (user && blog.user && blog.user._id.toString() === user._id.toString()) { %>
         <a class="update" href="/blogs/<%= blog._id %>/edit">
           <img src="/edit.svg" alt="edit icon">
         </a>
         <a class="delete" data-doc="<%= blog._id %>">
-          <img src="/trash.svg" alt="delete icon" >
+          <img src="/trash.svg" alt="delete icon">
         </a>
-      </section>
+      <% } %>
+    </section>
+
     </div>
     <p><%= blog.body %></p>
   </div>
